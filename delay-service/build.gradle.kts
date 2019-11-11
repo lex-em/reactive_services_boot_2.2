@@ -8,7 +8,6 @@ repositories {
 }
 
 dependencies {
-    val coroutinesVersion = "1.2.1"
     compile(kotlin("stdlib-jdk8"))
     compile(kotlin("reflect"))
     compile("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8")

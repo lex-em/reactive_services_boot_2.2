@@ -13,5 +13,5 @@ import ru.reliabletech.java_chel.front_service.dto.ComplexData
  */
 interface FrontService {
 
-    fun getComplexData(): Mono<ComplexData>
+    suspend fun getComplexData(): ComplexData
 }

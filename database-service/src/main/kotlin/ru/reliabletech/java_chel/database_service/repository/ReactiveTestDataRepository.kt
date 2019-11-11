@@ -3,10 +3,13 @@
  */
 package ru.reliabletech.java_chel.database_service.repository
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import org.springframework.data.r2dbc.core.DatabaseClient
 import org.springframework.data.r2dbc.core.asType
+import org.springframework.data.r2dbc.core.flow
 import org.springframework.stereotype.Repository
-import reactor.core.publisher.Flux
 import ru.reliabletech.java_chel.database_service.model.TestData
 
 /**
@@ -16,13 +19,14 @@ import ru.reliabletech.java_chel.database_service.model.TestData
 @Repository
 class ReactiveTestDataRepository(val databaseClient: DatabaseClient) : TestDataRepository {
 
-    override fun findTestData(page: Int, size: Int, data_like: String): Flux<TestData> {
-        return databaseClient.execute("select * from public.find(:data_like, :offset, :size)")
-                .bind("data_like", data_like)
-                .bind("offset", page*size)
-                .bind("size", size)
-                .asType<TestData>()
-                .fetch()
-                .all()
-    }
+    override suspend fun findTestData(page: Int, size: Int, data_like: String): Flow<TestData> =
+//            withContext(Dispatchers.IO) {
+                databaseClient.execute("select * from public.find(:data_like, :offset, :size)")
+                        .bind("data_like", data_like)
+                        .bind("offset", page * size)
+                        .bind("size", size)
+                        .asType<TestData>()
+                        .fetch()
+                        .flow()
+//            }
 }

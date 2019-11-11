@@ -3,6 +3,7 @@
  */
 package ru.reliabletech.java_chel.database_service.service
 
+import kotlinx.coroutines.flow.Flow
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,7 +20,7 @@ import ru.reliabletech.java_chel.database_service.repository.TestDataRepository
 @Transactional
 class VerySlowlyTestDataService(private val testDataRepository: TestDataRepository) : TestDataService {
 
-    override fun fetchTestData(page: Int, size: Int): Flux<TestData> {
+    suspend override fun fetchTestData(page: Int, size: Int): Flow<TestData> {
         return testDataRepository.findTestData(page, size, Alphabet16.random().name)
     }
 }
