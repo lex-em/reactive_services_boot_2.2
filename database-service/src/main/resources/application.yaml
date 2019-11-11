@@ -3,9 +3,14 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/reactive_services
-    type: com.zaxxer.hikari.HikariDataSource
     username: postgres
     password: postgres
-    hikari:
-      connection-timeout: 10000
-      maximum-pool-size: 500
+#spring.r2dbc:
+#  url: r2dbc:pool:postgresql://localhost:5432/reactive_services
+#  username: postgres
+#  password: postgres
+#  pool:
+#    initial-size: 100
+#    max-size: 500
+#    max-idle-time: 30m
+#    validation-query: SELECT 1

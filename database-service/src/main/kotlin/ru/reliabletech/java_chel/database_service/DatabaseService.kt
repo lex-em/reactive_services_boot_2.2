@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
 import org.springframework.stereotype.Component
+import ru.reliabletech.java_chel.database_service.repository.TestDataRepository
 import java.sql.DriverManager
 
 /*
@@ -70,16 +72,5 @@ class CommonDatabaseCreator(
             logger.error("Failed to create database \'{}\': {}", databaseName, e.message)
         }
 
-    }
-}
-
-@Configuration
-class DbConfig {
-    @Bean
-    fun beforeMigrationStrategy(databaseCreator: CommonDatabaseCreator): FlywayMigrationStrategy {
-        return FlywayMigrationStrategy { flyway ->
-            databaseCreator.createDatabase()
-            flyway.migrate()
-        }
     }
 }
